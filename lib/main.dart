@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'features/customer/presentation/pages/menu.dart';
+import 'features/customer/presentation/pages/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,12 +15,11 @@ class MyApp extends StatelessWidget {
       title: 'Sobre mesa',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-
           primary: const Color(0xFFFF8A65),
           secondary: const Color(0xFFFFC107),
         ),
       ),
-      home: const Menu(title: 'Cardápio'),
+      home: const Login(title: 'Login'),
     );
   }
 }
