@@ -13,11 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Sobre mesa',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+
+          primary: const Color(0xFFFF8A65),
+          secondary: const Color(0xFFFFC107),
+        ),
       ),
-      home: const Menu(title: 'SobreMesa'),
+      home: const Menu(title: 'Cardápio'),
     );
   }
 }
