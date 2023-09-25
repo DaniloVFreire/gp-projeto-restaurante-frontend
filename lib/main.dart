@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'features/customer/presentation/pages/cart.dart';
 import 'features/customer/presentation/pages/login.dart';
+import 'features/customer/presentation/pages/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +21,9 @@ class MyApp extends StatelessWidget {
           secondary: const Color(0xFFFFC107),
         ),
       ),
-      home: const Login(title: 'Login'),
+      home: const Cart(title: 'Carrinho'),
+      //const Menu(title: 'SobreMesa'),
+      //const Login(title: 'Login'),
     );
   }
 }
