@@ -110,7 +110,7 @@ class _MenuState extends State<Menu> {
                         Texts.loginPageButton +
                             Texts.totalBRL +
                             cart.totalPrice.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20)),
@@ -127,42 +127,55 @@ class _MenuState extends State<Menu> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Spacer(
-            flex: 2,
-          ),
-          Flexible(
-              flex: 8,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: imgManager.images[productsList[index].pictureId])),
-          const Spacer(
-            flex: 2,
-          ),
           Expanded(
-            flex: 18,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                    child: Text(
-                  productsList[index].name,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                )),
-                Flexible(
-                    child: Text(
-                  productsList[index].description,
-                  overflow: TextOverflow.ellipsis,
-                )),
-                Flexible(
-                    child: Text(
-                        'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
-              ],
+            flex: 30,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Urls.productDetailsPage);
+              },
+              child: Row(
+                children: [
+                  const Spacer(
+                    flex: 2,
+                  ),
+                  Flexible(
+                      flex: 8,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: imgManager
+                              .images[productsList[index].pictureId])),
+                  const Spacer(
+                    flex: 2,
+                  ),
+                  Expanded(
+                    flex: 18,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                            child: Text(
+                          productsList[index].name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        )),
+                        Flexible(
+                            child: Text(
+                          productsList[index].description,
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                        Flexible(
+                            child: Text(
+                                'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
+                      ],
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 2,
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Spacer(
-            flex: 2,
           ),
           Flexible(
             flex: 2,

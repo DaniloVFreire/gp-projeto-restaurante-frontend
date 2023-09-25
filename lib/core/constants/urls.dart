@@ -3,4 +3,5 @@ class Urls {
   static const loginPage = '/login';
   static const menuPage = '/menu';
   static const qrcodePage = '/qrcode';
+  static const productDetailsPage = '/product';
 }
