@@ -131,49 +131,58 @@ class _MenuState extends State<Menu> {
             flex: 30,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Urls.productDetailsPage);
+                Navigator.pushNamed(context, Urls.productDetailsPage,
+                    arguments: {
+                      'algo': 'Alguma' //productsList[index]
+                    });
               },
-              child: Row(
-                children: [
-                  const Spacer(
-                    flex: 2,
+              child: Expanded(
+                flex: 20,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      const Spacer(
+                        flex: 2,
+                      ),
+                      Flexible(
+                          flex: 8,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: imgManager
+                                  .images[productsList[index].pictureId])),
+                      const Spacer(
+                        flex: 2,
+                      ),
+                      Expanded(
+                        flex: 18,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                                child: Text(
+                              productsList[index].name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            Flexible(
+                                child: Text(
+                              productsList[index].description,
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                            Flexible(
+                                child: Text(
+                                    'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
+                          ],
+                        ),
+                      ),
+                      const Spacer(
+                        flex: 2,
+                      ),
+                    ],
                   ),
-                  Flexible(
-                      flex: 8,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: imgManager
-                              .images[productsList[index].pictureId])),
-                  const Spacer(
-                    flex: 2,
-                  ),
-                  Expanded(
-                    flex: 18,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Flexible(
-                            child: Text(
-                          productsList[index].name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        )),
-                        Flexible(
-                            child: Text(
-                          productsList[index].description,
-                          overflow: TextOverflow.ellipsis,
-                        )),
-                        Flexible(
-                            child: Text(
-                                'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
-                      ],
-                    ),
-                  ),
-                  const Spacer(
-                    flex: 2,
-                  ),
-                ],
+                ),
               ),
             ),
           ),

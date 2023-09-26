@@ -83,10 +83,12 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  loginRemoteDataSource.getUser(
-                      loginData: LoginData(
-                          email: email.text, passWord: passWord.text));
-                  Navigator.pushNamed(context, Urls.qrcodePage);
+                  if (null !=
+                      loginRemoteDataSource.getUser(
+                          loginData: LoginData(
+                              email: email.text, passWord: passWord.text))) {
+                    Navigator.pushNamed(context, Urls.qrcodePage);
+                  }
                 },
                 child: const Text(
                   'Login',
