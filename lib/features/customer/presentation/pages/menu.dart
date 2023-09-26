@@ -131,10 +131,7 @@ class _MenuState extends State<Menu> {
             flex: 30,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Urls.productDetailsPage,
-                    arguments: {
-                      'algo': 'Alguma' //productsList[index]
-                    });
+                Navigator.pushNamed(context, Urls.productDetailsPage);
               },
               child: Expanded(
                 flex: 20,

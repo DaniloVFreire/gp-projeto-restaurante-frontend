@@ -6,8 +6,6 @@ import 'package:sobre_mesa/features/customer/presentation/pages/login_qr.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/menu.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/product_details.dart';
 import 'features/shared/presentation/pages/login.dart';
-import 'features/customer/presentation/pages/login.dart';
-import 'features/customer/presentation/pages/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +23,7 @@ class MyApp extends StatelessWidget {
         Urls.qrcodePage: (context) => const LoginQR(),
         Urls.menuPage: (context) => const Menu(),
         Urls.productDetailsPage: (context) => ProductDetails(),
+        Urls.cartPage: (context) => Cart(),
       },
       initialRoute: Urls.loginPage,
       title: Texts.appName,

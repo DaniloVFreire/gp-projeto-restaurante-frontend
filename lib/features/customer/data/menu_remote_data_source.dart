@@ -3,31 +3,49 @@ import 'package:dio/dio.dart';
 import '../domain/entities/product.dart';
 import 'package:sobre_mesa/core/error/server_exceptions.dart';
 
-class MenuRemoteDataSource{
+class MenuRemoteDataSource {
   final Dio httpClient = Dio();
   Map<String, Product> productsMap = {};
-  List<Product> productsList =[];
+  List<Product> productsList = [];
   List<Product> getMenuProductsList() {
-    try{
-      productsList.add (Product(name: 'Panqueca de chocolate', description: 'Deliciosasa panquecas, com brigadeiro e fatias de morango.', price: 16.50, pictureId: 0, id: 'Panqueca de chocolate'));
-      productsList.add(Product(name: 'Latte', description: 'Café de alta qualidade, com distintas camadas de leite e espuma.', price: 12.99, pictureId: 1, id: 'Panqueca de chocolate'));
-      productsList.add(Product(name: 'Executivo com frango', description: 'Frango, arroz e batata.', price: 17.00, pictureId: 2, id: 'Panqueca de chocolate'));
+    try {
+      productsList.add(Product(
+          name: 'Panqueca de chocolate',
+          description:
+              'Deliciosas panquecas, com brigadeiro e fatias de morango.',
+          price: 16.50,
+          pictureId: 0,
+          id: 'Panqueca de chocolate'));
+      productsList.add(Product(
+          name: 'Latte',
+          description:
+              'Café de alta qualidade, com distintas camadas de leite e espuma.',
+          price: 12.99,
+          pictureId: 1,
+          id: 'Panqueca de chocolate'));
+      productsList.add(Product(
+          name: 'Executivo com frango',
+          description: 'Frango, arroz e batata.',
+          price: 17.00,
+          pictureId: 2,
+          id: 'Panqueca de chocolate'));
       return productsList;
-    } catch (e){
-     throw ApiRequestTimeoutException(errorMessage: 'socorro');
+    } catch (e) {
+      throw ApiRequestTimeoutException(errorMessage: 'socorro');
     }
   }
-   Map<String, Product> getMenuProductsMap() {
-    try{
-      if(productsList == null){
-      getMenuProductsList();
+
+  Map<String, Product> getMenuProductsMap() {
+    try {
+      if (productsList == null) {
+        getMenuProductsList();
       }
-        for (final i in productsList){
-          productsMap[i.id] = i;
-    }
+      for (final i in productsList) {
+        productsMap[i.id] = i;
+      }
       return productsMap;
-    } catch (e){
-     throw ApiRequestTimeoutException(errorMessage: 'socorro');
+    } catch (e) {
+      throw ApiRequestTimeoutException(errorMessage: 'socorro');
     }
   }
 }

@@ -4,4 +4,5 @@ class Urls {
   static const menuPage = '/menu';
   static const qrcodePage = '/qrcode';
   static const productDetailsPage = '/product';
+  static const cartPage = '/cart';
 }
