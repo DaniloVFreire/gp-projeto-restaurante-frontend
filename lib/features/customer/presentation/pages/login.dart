@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sobre_mesa/core/constants/texts.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
-
-  final String title;
-
+  const Login({super.key});
   @override
   // ignore: library_private_types_in_public_api
   _LoginState createState() => _LoginState();
@@ -39,8 +37,8 @@ class _LoginState extends State<Login> {
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Insira um email valido'),
+                    labelText: Texts.email,
+                    hintText: Texts.emailFieldHintText),
               ),
             ),
             const Padding(
@@ -79,7 +77,7 @@ class _LoginState extends State<Login> {
             const SizedBox(
               height: 130,
             ),
-            const Text('New User? Create Account')
+            const Text(Texts.signInButton)
           ],
         ),
       ),
