@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
+import 'package:sobre_mesa/core/constants/urls.dart';
 
 class LoginQR extends StatefulWidget {
   const LoginQR({super.key});
@@ -36,11 +36,8 @@ class _LoginQRState extends State<LoginQR> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-  
-  
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -60,7 +57,8 @@ class _LoginQRState extends State<LoginQR> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+              padding:
+                  EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
@@ -86,7 +84,8 @@ class _LoginQRState extends State<LoginQR> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding:
+                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
             ),
             Container(
               height: 50,
@@ -96,7 +95,9 @@ class _LoginQRState extends State<LoginQR> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Urls.menuPage);
+                },
                 child: const Text(
                   'Usar Mesa',
                   style: TextStyle(color: Colors.white, fontSize: 25),

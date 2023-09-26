@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
+import 'package:sobre_mesa/core/constants/urls.dart';
 import 'package:sobre_mesa/core/utils/image_manager.dart';
-import 'package:sobre_mesa/features/customer/data/remote_data_source.dart';
 import 'package:sobre_mesa/features/customer/domain/entities/cart.dart';
 import 'package:sobre_mesa/features/customer/domain/entities/product.dart';
+import 'package:sobre_mesa/features/customer/data/menu_remote_data_source.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key, this.fromBuildProducts});
@@ -17,7 +18,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   Color buttonColor = Colors.deepOrange.shade500;
   Map<String, Product> productsMap = {};
-  List<Product> productsList =[];
+  List<Product> productsList = [];
   ImageManager imgManager = ImageManager();
   int maxPictureId = 0;
   late Cart cart;
@@ -35,23 +36,25 @@ class _MenuState extends State<Menu> {
     productsList = remoteDataSource.getMenuProductsList();
     productsMap = remoteDataSource.getMenuProductsMap();
     cart = Cart(productsList: productsList, productsMap: productsMap);
-    if(widget.fromBuildProducts != null){
-        for (final key in widget.fromBuildProducts!.keys){
-          if(widget.fromBuildProducts![key]!.quantity>0 && cart.productsMap[key] != null){
-            cart.incrementQuantity(product: cart.productsMap[key]!, quantity: widget.fromBuildProducts![key]!.quantity);
-          } else{
-            cart.productsMap[key] = widget.fromBuildProducts![key]!;
-          }
+    if (widget.fromBuildProducts != null) {
+      for (final key in widget.fromBuildProducts!.keys) {
+        if (widget.fromBuildProducts![key]!.quantity > 0 &&
+            cart.productsMap[key] != null) {
+          cart.incrementQuantity(
+              product: cart.productsMap[key]!,
+              quantity: widget.fromBuildProducts![key]!.quantity);
+        } else {
+          cart.productsMap[key] = widget.fromBuildProducts![key]!;
         }
       }
     }
+  }
+
   @override
   Widget build(BuildContext context) {
     maxPictureId = imgManager.images.length;
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
+      body: Stack(alignment: Alignment.bottomCenter, children: [
         ListView.builder(
             itemCount: productsList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -91,20 +94,29 @@ class _MenuState extends State<Menu> {
         Positioned(
           bottom: 10,
           child: RawMaterialButton(
-            fillColor: buttonColor,
+              fillColor: buttonColor,
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, Urls.loginPage);
               },
               elevation: 1.0,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(children: [
-                  Text( Texts.loginPageButton + Texts.totalBRL + cart.totalPrice.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
-                ],),
-              )
-            ),
+                child: Row(
+                  children: [
+                    Text(
+                        Texts.loginPageButton +
+                            Texts.totalBRL +
+                            cart.totalPrice.toString(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ],
+                ),
+              )),
         ),
       ]),
     );
@@ -115,42 +127,64 @@ class _MenuState extends State<Menu> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Spacer(
-            flex: 2,
-          ),
-          Flexible(
-              flex: 8,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: imgManager.images[productsList[index].pictureId])),
-          const Spacer(
-            flex: 2,
-          ),
           Expanded(
-            flex: 18,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                    child: Text(
-                  productsList[index].name,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                )),
-                Flexible(
-                    child: Text(
-                  productsList[index].description,
-                  overflow: TextOverflow.ellipsis,
-                )),
-                Flexible(
-                    child: Text(
-                        'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
-              ],
+            flex: 30,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Urls.productDetailsPage,
+                    arguments: {
+                      'algo': 'Alguma' //productsList[index]
+                    });
+              },
+              child: Expanded(
+                flex: 20,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      const Spacer(
+                        flex: 2,
+                      ),
+                      Flexible(
+                          flex: 8,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: imgManager
+                                  .images[productsList[index].pictureId])),
+                      const Spacer(
+                        flex: 2,
+                      ),
+                      Expanded(
+                        flex: 18,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                                child: Text(
+                              productsList[index].name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            Flexible(
+                                child: Text(
+                              productsList[index].description,
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                            Flexible(
+                                child: Text(
+                                    'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
+                          ],
+                        ),
+                      ),
+                      const Spacer(
+                        flex: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-          const Spacer(
-            flex: 2,
           ),
           Flexible(
             flex: 2,

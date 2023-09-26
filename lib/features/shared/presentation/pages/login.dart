@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
+import 'package:sobre_mesa/core/constants/urls.dart';
+import 'package:sobre_mesa/features/shared/data/login_remote_data_source.dart';
+import 'package:sobre_mesa/features/shared/domain/entities/login_data.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,6 +12,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  LoginRemoteDataSource loginRemoteDataSource = LoginRemoteDataSource();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController passWord = TextEditingController();
+  @override
+  void initState() {
+    //Get user from cache
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,23 +43,26 @@ class _LoginState extends State<Login> {
                     child: Image.asset('./assets/login.jpg')),
               ),
             ),
-            const Padding(
+            Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: Texts.email,
-                    hintText: Texts.emailFieldHintText),
+                controller: email,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: Texts.email,
+                  hintText: Texts.emailFieldHintText,
+                ),
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: passWord,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Senha',
                     hintText: 'Insira uma senha segura'),
@@ -67,7 +82,14 @@ class _LoginState extends State<Login> {
                   color: Colors.deepOrange,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (null !=
+                      loginRemoteDataSource.getUser(
+                          loginData: LoginData(
+                              email: email.text, passWord: passWord.text))) {
+                    Navigator.pushNamed(context, Urls.qrcodePage);
+                  }
+                },
                 child: const Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
