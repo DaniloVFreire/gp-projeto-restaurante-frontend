@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'features/customer/presentation/pages/cart.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/menu.dart';
 import 'features/customer/presentation/pages/login.dart';
+import 'features/customer/presentation/pages/menu.dart';
 
 void main() {
   runApp(const MyApp());
