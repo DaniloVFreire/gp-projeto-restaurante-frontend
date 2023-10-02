@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sobre_mesa/features/customer/presentation/pages/qr_code.dart';
 import 'features/customer/presentation/pages/cart.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
 import 'package:sobre_mesa/core/constants/urls.dart';

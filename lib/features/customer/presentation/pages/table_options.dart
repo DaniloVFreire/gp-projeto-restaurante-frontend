@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sobre_mesa/features/customer/presentation/pages/qr_code.dart';
 
 class TableOptions extends StatefulWidget {
   @override
@@ -11,14 +12,10 @@ class _TableOptionsState extends State<TableOptions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Mesas'),
-      //   centerTitle: true,
-      // ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-             const Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 150),
             ),
             const Padding(
@@ -60,14 +57,19 @@ class _TableOptionsState extends State<TableOptions> {
     );
   }
 
-   Widget buildTableButton(int tableNumber) {
+  Widget buildTableButton(int tableNumber) {
     return Container(
       width: 100,
       height: 100,
       child: ElevatedButton(
         onPressed: () {
-          // Add your action when a table button is pressed here
-          // For example, navigate to a specific table's details
+          // Open the QR code page with the corresponding table number
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QrcodePage(tableNumber: tableNumber),
+            ),
+          );
         },
         child: Text(
           'Mesa $tableNumber',
