@@ -22,13 +22,13 @@ class MenuRemoteDataSource {
               'Café de alta qualidade, com distintas camadas de leite e espuma.',
           price: 12.99,
           pictureId: 1,
-          id: 'Panqueca de chocolate'));
+          id: 'Latte'));
       productsList.add(Product(
           name: 'Executivo com frango',
           description: 'Frango, arroz e batata.',
           price: 17.00,
           pictureId: 2,
-          id: 'Panqueca de chocolate'));
+          id: 'Executivo com frango'));
       return productsList;
     } catch (e) {
       throw ApiRequestTimeoutException(errorMessage: 'socorro');
