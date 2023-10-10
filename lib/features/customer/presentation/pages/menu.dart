@@ -29,13 +29,18 @@ class _MenuState extends State<Menu> {
     fit: BoxFit.cover,
     height: 100,
   );
+
   @override
   void initState() {
     super.initState();
+
     imgManager.populateImagesManually();
+
     productsList = remoteDataSource.getMenuProductsList();
     productsMap = remoteDataSource.getMenuProductsMap();
+
     cart = Cart(productsList: productsList, productsMap: productsMap);
+
     if (widget.fromBuildProducts != null) {
       for (final key in widget.fromBuildProducts!.keys) {
         if (widget.fromBuildProducts![key]!.quantity > 0 &&
@@ -68,7 +73,7 @@ class _MenuState extends State<Menu> {
                   const Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Text(
-                      'Sobre Mesa',
+                      'SobreMesa',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
@@ -96,7 +101,7 @@ class _MenuState extends State<Menu> {
           child: RawMaterialButton(
               fillColor: buttonColor,
               onPressed: () {
-                Navigator.pushNamed(context, Urls.loginPage);
+                Navigator.pushNamed(context, Urls.cartPage);
               },
               elevation: 1.0,
               shape: RoundedRectangleBorder(
@@ -107,9 +112,11 @@ class _MenuState extends State<Menu> {
                 child: Row(
                   children: [
                     Text(
-                        Texts.loginPageButton +
+                        Texts.addToCart +
                             Texts.totalBRL +
-                            cart.totalPrice.toString(),
+                            cart.totalPrice
+                                .toStringAsFixed(2)
+                                .replaceAll('.', ','),
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

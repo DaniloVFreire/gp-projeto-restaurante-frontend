@@ -17,7 +17,6 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   final TextEditingController email = TextEditingController();
   final TextEditingController passWord = TextEditingController();
-  ImageManager imgManager = ImageManager();
   Color buttonColor = Colors.deepOrange.shade500;
   late MenuRemoteDataSource dataSource = MenuRemoteDataSource();
   late ImageManager imageManager = ImageManager();
@@ -25,6 +24,7 @@ class _CartState extends State<Cart> {
   late Product product;
   @override
   void initState() {
+    imageManager.populateImagesManually();
     productsList = dataSource.getMenuProductsList();
     product = productsList[0];
     //Get user from cache
@@ -36,7 +36,7 @@ class _CartState extends State<Cart> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Product details"),
+        title: const Text("Carrinho"),
       ),
       body: SingleChildScrollView(
         child: Column(children: <Widget>[productCard(product)]),
@@ -64,7 +64,7 @@ class _CartState extends State<Cart> {
                       flex: 8,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
-                          child: imgManager.images[product.pictureId])),
+                          child: imageManager.images[product.pictureId])),
                   const Spacer(
                     flex: 2,
                   ),

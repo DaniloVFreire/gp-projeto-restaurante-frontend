@@ -5,13 +5,6 @@ import 'package:flutter/material.dart';
 class ImageManager {
   List<Image> images = [];
 
-  populateImagesFromAssets() async {
-    final dir = Directory('');
-    final List<FileSystemEntity> entities = await dir.list().toList();
-    entities.forEach(print);
-    final Iterable<File> files = entities.whereType<File>();
-  }
-
   populateImagesManually() {
     images = [];
     images.add(Image.asset(
