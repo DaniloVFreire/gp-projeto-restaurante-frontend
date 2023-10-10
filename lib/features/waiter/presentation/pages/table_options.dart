@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sobre_mesa/features/customer/presentation/pages/qr_code.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sobre_mesa/core/constants/urls.dart';
+import 'package:sobre_mesa/features/waiter/presentation/pages/qr_code.dart';
 
 class TableOptions extends StatefulWidget {
   const TableOptions({super.key});
-
   @override
   State<TableOptions> createState() => _TableOptionsState();
 }
@@ -11,7 +12,6 @@ class TableOptions extends StatefulWidget {
 class _TableOptionsState extends State<TableOptions> {
   int _selectedIndex =
       0; // Default selected index for the bottom navigation bar
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +33,9 @@ class _TableOptionsState extends State<TableOptions> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  buildTableButton(1),
-                  buildTableButton(2),
-                  buildTableButton(3),
+                  buildTableButton(1, false),
+                  buildTableButton(2, true),
+                  buildTableButton(3, false),
                 ],
               ),
             ),
@@ -60,19 +60,26 @@ class _TableOptionsState extends State<TableOptions> {
     );
   }
 
-  Widget buildTableButton(int tableNumber) {
+  Widget buildTableButton(int tableNumber, bool beingUsed) {
     return Container(
       width: 100,
       height: 100,
       child: ElevatedButton(
         onPressed: () {
+          if (beingUsed) {
+            context.pushNamed(RouteNames.tableQrCodePage,
+                extra: tableNumber.toString());
+          } else {
+            context.pushNamed(RouteNames.tableInfoPage,
+                extra: tableNumber.toString());
+          }
           // Open the QR code page with the corresponding table number
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => QrcodePage(tableNumber: tableNumber),
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => TableQrcodePage(tableNumber: tableNumber),
+          //   ),
+          // );
         },
         child: Text(
           'Mesa $tableNumber',
@@ -86,10 +93,9 @@ class _TableOptionsState extends State<TableOptions> {
     setState(() {
       _selectedIndex = index;
       // Add actions for each button here, based on the selected index
-      if (index == 0) {
-        // Handle Button 1 action
-      } else if (index == 1) {
+      if (index == 1) {
         // Handle Button 2 action
+        context.go(Urls.ordersFeedPage);
       }
     });
   }

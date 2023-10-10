@@ -4,14 +4,16 @@ import 'package:provider/provider.dart';
 import 'package:sobre_mesa/core/widgets/cart_notifier.dart';
 import 'package:sobre_mesa/features/customer/data/menu_remote_data_source.dart';
 import 'package:sobre_mesa/features/customer/domain/entities/product.dart';
-import 'package:sobre_mesa/features/customer/presentation/pages/qr_code.dart';
+import 'package:sobre_mesa/features/waiter/presentation/pages/orders_feed.dart';
+import 'package:sobre_mesa/features/waiter/presentation/pages/qr_code.dart';
+import 'package:sobre_mesa/features/waiter/presentation/pages/table_info.dart';
 import 'features/customer/presentation/pages/cart.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
 import 'package:sobre_mesa/core/constants/urls.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/login_qr.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/menu.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/product_details.dart';
-import 'package:sobre_mesa/features/customer/presentation/pages/table_options.dart';
+import 'package:sobre_mesa/features/waiter/presentation/pages/table_options.dart';
 import 'features/shared/presentation/pages/login.dart';
 
 void main() {
@@ -27,18 +29,18 @@ class MyApp extends StatelessWidget {
     MenuRemoteDataSource remoteDataSource = MenuRemoteDataSource();
     final products = remoteDataSource.getMenuProductsList();
     CartNotifier cartNotifier = CartNotifier(products: products);
-    final router = GoRouter(initialLocation: Urls.qrcodePage, routes: [
+    final router = GoRouter(initialLocation: Urls.loginQrcodePage, routes: [
       GoRoute(
           name: RouteNames.loginPage,
           path: Urls.loginPage,
           builder: (context, state) => const Login()),
       GoRoute(
-          name: RouteNames.qrcodePage,
-          path: Urls.qrcodePage,
+          name: RouteNames.loginQrcodePage,
+          path: Urls.loginQrcodePage,
           builder: (context, state) => const LoginQR()),
       GoRoute(
           name: RouteNames.tableOptions,
-          path: Urls.tableOptions,
+          path: Urls.tableOptionsPage,
           builder: (context, state) => const TableOptions()),
       GoRoute(
           name: RouteNames.productDetailsPage,
@@ -60,7 +62,27 @@ class MyApp extends StatelessWidget {
           child: const Menu(),
         ),
       ),
+      GoRoute(
+        name: RouteNames.ordersFeedPage,
+        path: Urls.ordersFeedPage,
+        builder: (context, state) => OrdersFeed(),
+      ),
+      GoRoute(
+        name: RouteNames.tableInfoPage,
+        path: Urls.tableInfoPage,
+        builder: (context, state) => TableInfo(
+          tableNumber: state.pathParameters['table_number'],
+        ),
+      ),
+      GoRoute(
+        name: RouteNames.tableQrCodePage,
+        path: Urls.tableQrCodePage,
+        builder: (context, state) => TableQrcodePage(
+          tableNumber: state.extra,
+        ),
+      ),
     ]);
+
     return MaterialApp.router(
       routerConfig: router,
       title: Texts.appName,

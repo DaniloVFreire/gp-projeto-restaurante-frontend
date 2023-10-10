@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class QrcodePage extends StatelessWidget {
-  final int tableNumber; // Receive the table number as an argument
+class TableQrcodePage extends StatelessWidget {
+  final Object? tableNumber; // Receive the table number as an argument
 
-  QrcodePage({required this.tableNumber});
+  TableQrcodePage({required this.tableNumber});
 
   @override
   Widget build(BuildContext context) {
+    String? tableNumberString;
+    if (tableNumber is String) {
+      tableNumberString = tableNumber as String;
+    } else {
+      context.pop();
+    }
     // Generate QR code data using the table number
-    String qrData = 'Table $tableNumber QR code data';
+    String qrData = 'Table $tableNumberString QR code data';
 
     return Scaffold(
       appBar: AppBar(
@@ -38,6 +45,27 @@ class QrcodePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Text('Scan this QR code'),
+            Center(
+              child: Container(
+                height: 50,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.deepOrange,
+                  borderRadius: const BorderRadius.all(Radius.circular(2)),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  child: const Center(
+                    child: Text(
+                      'Fechar conta',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

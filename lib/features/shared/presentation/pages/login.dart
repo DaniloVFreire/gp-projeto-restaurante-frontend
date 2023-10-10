@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
 import 'package:sobre_mesa/core/constants/urls.dart';
 import 'package:sobre_mesa/features/shared/data/login_remote_data_source.dart';
@@ -86,9 +87,8 @@ class _LoginState extends State<Login> {
                   if (null !=
                       loginRemoteDataSource.getUser(
                           loginData: LoginData(
-                              email: email.text, passWord: passWord.text))) {
-                    Navigator.pushNamed(context, Urls.qrcodePage);
-                  }
+                              email: email.text, passWord: passWord.text))) {}
+                  context.go(Urls.tableOptionsPage);
                 },
                 child: const Text(
                   'Login',

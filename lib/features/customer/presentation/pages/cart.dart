@@ -24,6 +24,7 @@ class _CartState extends State<Cart> {
   late MenuRemoteDataSource dataSource = MenuRemoteDataSource();
   late ImageManager imageManager = ImageManager();
   List<Product> products = [];
+  double total_price = 0;
   @override
   void initState() {
     imageManager.populateImagesManually();
@@ -34,7 +35,12 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     if (widget.productsList is List<Product>) {
-      products = widget.productsList as List<Product>;
+      for (final product in widget.productsList as List<Product>) {
+        if (product.quantity > 0) {
+          products.add(product);
+          total_price += product.price * product.quantity;
+        }
+      }
     }
     return Scaffold(
       backgroundColor: Colors.white,
@@ -88,10 +94,10 @@ class _CartState extends State<Cart> {
         Center(
           child: Container(
             height: 50,
-            width: 250,
+            width: 300,
             decoration: BoxDecoration(
               color: Colors.deepOrange,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: const BorderRadius.all(Radius.circular(2)),
             ),
             child: TextButton(
               onPressed: () {
@@ -99,24 +105,38 @@ class _CartState extends State<Cart> {
               },
               child: const Center(
                 child: Text(
-                  'Voltar',
+                  'Voltar para o cardápio',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
           ),
         ),
-        //Container(
-        //   color: Colors.red,
-        //   width: 30,
-        //   height: 30,
-        //   child: InkWell(
-        //     child: Text(products[0].name),
-        //     onTap: () {
-        //       context.go(Urls.menuPage);
-        //     },
-        //   ),
-        // );
+        Text('${Texts.totalBRL} $total_price'),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Container(
+              height: 50,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.deepOrange,
+                borderRadius: const BorderRadius.all(Radius.circular(2)),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  context.go(Urls.menuPage);
+                },
+                child: const Center(
+                  child: Text(
+                    'Fechar conta',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
