@@ -45,12 +45,12 @@ class _TableOptionsState extends State<TableOptions> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Button 1',
+            icon: Icon(Icons.list),
+            label: 'Feed de pedidos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Button 2',
+            icon: Icon(Icons.table_bar),
+            label: 'Mesas',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -73,13 +73,6 @@ class _TableOptionsState extends State<TableOptions> {
             context.pushNamed(RouteNames.tableInfoPage,
                 extra: tableNumber.toString());
           }
-          // Open the QR code page with the corresponding table number
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => TableQrcodePage(tableNumber: tableNumber),
-          //   ),
-          // );
         },
         child: Text(
           'Mesa $tableNumber',

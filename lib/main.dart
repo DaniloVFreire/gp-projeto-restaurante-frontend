@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         name: RouteNames.tableInfoPage,
         path: Urls.tableInfoPage,
         builder: (context, state) => TableInfo(
-          tableNumber: state.pathParameters['table_number'],
+          tableNumber: state.extra,
         ),
       ),
       GoRoute(

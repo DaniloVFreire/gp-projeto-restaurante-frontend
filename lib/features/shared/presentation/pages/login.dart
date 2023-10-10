@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
                       loginRemoteDataSource.getUser(
                           loginData: LoginData(
                               email: email.text, passWord: passWord.text))) {}
-                  context.go(Urls.tableOptionsPage);
+                  context.go(Urls.ordersFeedPage);
                 },
                 child: const Text(
                   'Login',

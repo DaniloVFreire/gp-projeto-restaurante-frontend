@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class TableInfo extends StatelessWidget {
-  final String? tableNumber; // Receive the table number as an argument
+  final Object? tableNumber; // Receive the table number as an argument
 
   TableInfo({required this.tableNumber});
 
@@ -11,7 +11,7 @@ class TableInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     // Generate QR code data using the table number
     String qrData = 'Table $tableNumber QR code data';
-    if (tableNumber == null) {
+    if (tableNumber is String == false) {
       context.pop();
     }
     return Scaffold(
