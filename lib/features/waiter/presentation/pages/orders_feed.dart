@@ -34,12 +34,12 @@ class _OrdersFeedState extends State<OrdersFeed> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Feed de pedidos',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.table_bar),
             label: 'Mesas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Feed de pedidos',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -21,13 +21,14 @@ class _CartState extends State<Cart> {
   final TextEditingController email = TextEditingController();
   final TextEditingController passWord = TextEditingController();
   Color buttonColor = Colors.deepOrange.shade500;
-  late MenuRemoteDataSource dataSource = MenuRemoteDataSource();
+  MenuRemoteDataSource dataSource = MenuRemoteDataSource();
   late ImageManager imageManager = ImageManager();
   List<Product> products = [];
   double total_price = 0;
   @override
   void initState() {
     imageManager.populateImagesManually();
+    products = dataSource.getMenuProductsListFromApi() as List<Product>;
     //Get user from cache
     super.initState();
   }
@@ -91,6 +92,13 @@ class _CartState extends State<Cart> {
                 },
               )),
         ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Valor total do pedido: ${Texts.totalBRL} ${total_price.toStringAsFixed(2).replaceAll('.', ',')}',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
         Center(
           child: Container(
             height: 50,
@@ -112,7 +120,6 @@ class _CartState extends State<Cart> {
             ),
           ),
         ),
-        Text('${Texts.totalBRL} $total_price'),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(

@@ -11,7 +11,7 @@ class RouteNames {
 }
 
 class Urls {
-  static const baseAPI = 'http://127.0.0.1:8000/';
+  static const baseAPI = 'http://127.0.0.1:3000/';
   static const String loginPage = '/${RouteNames.loginPage}';
   static const String menuPage = '/${RouteNames.menuPage}';
   static const String loginQrcodePage = '/${RouteNames.loginQrcodePage}';
