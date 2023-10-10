@@ -12,6 +12,6 @@ class Texts {
   static const signInButton = 'Novo usuário, crie uma conta';
 
 //Menu page
-  static const totalBRL = ' - R\$';
+  static const totalBRL = 'R\$';
   static const addToCart = 'Adicionar ao carrinho';
 }

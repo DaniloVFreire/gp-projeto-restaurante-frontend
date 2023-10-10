@@ -21,5 +21,5 @@ class Product {
     _quantity++;
   }
 
-  get quantity => _quantity;
+  int get quantity => _quantity;
 }

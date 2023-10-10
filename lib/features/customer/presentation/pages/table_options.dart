@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/qr_code.dart';
 
 class TableOptions extends StatefulWidget {
+  const TableOptions({super.key});
+
   @override
   State<TableOptions> createState() => _TableOptionsState();
 }
 
 class _TableOptionsState extends State<TableOptions> {
-  int _selectedIndex = 0; // Default selected index for the bottom navigation bar
+  int _selectedIndex =
+      0; // Default selected index for the bottom navigation bar
 
   @override
   Widget build(BuildContext context) {

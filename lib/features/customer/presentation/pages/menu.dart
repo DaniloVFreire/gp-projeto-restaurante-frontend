@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
 import 'package:sobre_mesa/core/constants/urls.dart';
 import 'package:sobre_mesa/core/utils/image_manager.dart';
+import 'package:sobre_mesa/core/widgets/cart_notifier.dart';
 import 'package:sobre_mesa/features/customer/domain/entities/cart.dart';
 import 'package:sobre_mesa/features/customer/domain/entities/product.dart';
 import 'package:sobre_mesa/features/customer/data/menu_remote_data_source.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({super.key, this.fromBuildProducts});
-
-  final Map<String, Product>? fromBuildProducts;
+  const Menu({super.key});
 
   @override
   State<Menu> createState() => _MenuState();
@@ -17,11 +18,8 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   Color buttonColor = Colors.deepOrange.shade500;
-  Map<String, Product> productsMap = {};
-  List<Product> productsList = [];
   ImageManager imgManager = ImageManager();
   int maxPictureId = 0;
-  late Cart cart;
   MenuRemoteDataSource remoteDataSource = MenuRemoteDataSource();
   Image homeImage = Image.asset(
     './assets/cafe_home.webp',
@@ -35,101 +33,84 @@ class _MenuState extends State<Menu> {
     super.initState();
 
     imgManager.populateImagesManually();
-
-    productsList = remoteDataSource.getMenuProductsList();
-    productsMap = remoteDataSource.getMenuProductsMap();
-
-    cart = Cart(productsList: productsList, productsMap: productsMap);
-
-    if (widget.fromBuildProducts != null) {
-      for (final key in widget.fromBuildProducts!.keys) {
-        if (widget.fromBuildProducts![key]!.quantity > 0 &&
-            cart.productsMap[key] != null) {
-          cart.incrementQuantity(
-              product: cart.productsMap[key]!,
-              quantity: widget.fromBuildProducts![key]!.quantity);
-        } else {
-          cart.productsMap[key] = widget.fromBuildProducts![key]!;
-        }
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     maxPictureId = imgManager.images.length;
-    return Scaffold(
-      body: Stack(alignment: Alignment.bottomCenter, children: [
-        ListView.builder(
-            itemCount: productsList.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) {
-                return Stack(alignment: Alignment.topCenter, children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 250,
-                    child: homeImage,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(
-                      'SobreMesa',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w300),
+    return Consumer<CartNotifier>(builder: (context, cart, child) {
+      return Scaffold(
+        body: Stack(alignment: Alignment.bottomCenter, children: [
+          ListView.builder(
+              itemCount: cart.products.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
+                  return Stack(alignment: Alignment.topCenter, children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: 250,
+                      child: homeImage,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 200),
-                    child: Container(
-                        decoration: const BoxDecoration(
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Text(
+                        'SobreMesa',
+                        style: TextStyle(
                             color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20))),
-                        height: 86,
-                        child: productCard(index)),
+                            fontSize: 40,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 200),
+                      child: Container(
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20))),
+                          height: 86,
+                          child: productCard(index, cart)),
+                    ),
+                  ]);
+                }
+                return Container(
+                    height: 86,
+                    color: Colors.white,
+                    child: productCard(index, cart));
+              }),
+          if (cart.totalPrice > 0)
+            Positioned(
+              bottom: 10,
+              child: RawMaterialButton(
+                  fillColor: buttonColor,
+                  onPressed: () {
+                    context.goNamed(RouteNames.cartPage, extra: cart.products);
+                  },
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                ]);
-              }
-              return Container(
-                  height: 86, color: Colors.white, child: productCard(index));
-            }),
-        Positioned(
-          bottom: 10,
-          child: RawMaterialButton(
-              fillColor: buttonColor,
-              onPressed: () {
-                Navigator.pushNamed(context, Urls.cartPage);
-              },
-              elevation: 1.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text(
-                        Texts.addToCart +
-                            Texts.totalBRL +
-                            cart.totalPrice
-                                .toStringAsFixed(2)
-                                .replaceAll('.', ','),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  ],
-                ),
-              )),
-        ),
-      ]),
-    );
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text(
+                            "${Texts.addToCart} ${Texts.totalBRL} ${cart.totalPrice.toStringAsFixed(2).replaceAll('.', ',')}",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)),
+                      ],
+                    ),
+                  )),
+            ),
+        ]),
+      );
+    });
   }
 
-  Widget productCard(int index) {
+  Widget productCard(int index, CartNotifier cart) {
     return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,7 +119,8 @@ class _MenuState extends State<Menu> {
             flex: 30,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Urls.productDetailsPage);
+                context.go(Urls.productDetailsPage,
+                    extra: cart.products[index]);
               },
               child: Expanded(
                 flex: 20,
@@ -154,7 +136,7 @@ class _MenuState extends State<Menu> {
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: imgManager
-                                  .images[productsList[index].pictureId])),
+                                  .images[cart.products[index].pictureId])),
                       const Spacer(
                         flex: 2,
                       ),
@@ -166,18 +148,18 @@ class _MenuState extends State<Menu> {
                           children: [
                             Flexible(
                                 child: Text(
-                              productsList[index].name,
+                              cart.products[index].name,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             )),
                             Flexible(
                                 child: Text(
-                              productsList[index].description,
+                              cart.products[index].description,
                               overflow: TextOverflow.ellipsis,
                             )),
                             Flexible(
                                 child: Text(
-                                    'R\$ ${productsList[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
+                                    '${Texts.totalBRL} ${cart.products[index].price.toStringAsFixed(2).replaceAll('.', ',')}')),
                           ],
                         ),
                       ),
@@ -196,7 +178,7 @@ class _MenuState extends State<Menu> {
               constraints: BoxConstraints.tight(const Size(20, 20)),
               onPressed: () {
                 setState(() {
-                  cart.decrementQuantity(product: productsList[index]);
+                  cart.removeProduct(id: cart.products[index].id);
                 });
               },
               elevation: 1.0,
@@ -224,7 +206,7 @@ class _MenuState extends State<Menu> {
                 ),
                 child: Center(
                     child: Text(
-                  productsList[index].quantity.toString(),
+                  cart.products[index].quantity.toString(),
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -243,7 +225,7 @@ class _MenuState extends State<Menu> {
               constraints: BoxConstraints.tight(const Size(20, 20)),
               onPressed: () {
                 setState(() {
-                  cart.incrementQuantity(product: productsList[index]);
+                  cart.addProduct(id: cart.products[index].id);
                 });
               },
               elevation: 1.0,

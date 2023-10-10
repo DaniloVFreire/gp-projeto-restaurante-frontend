@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sobre_mesa/core/widgets/cart_notifier.dart';
 import 'package:sobre_mesa/features/customer/data/menu_remote_data_source.dart';
+import 'package:sobre_mesa/features/customer/domain/entities/product.dart';
 import 'package:sobre_mesa/features/customer/presentation/pages/qr_code.dart';
 import 'features/customer/presentation/pages/cart.dart';
 import 'package:sobre_mesa/core/constants/texts.dart';
@@ -23,27 +25,51 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuRemoteDataSource remoteDataSource = MenuRemoteDataSource();
-    return ChangeNotifierProvider(
-      create: (context) =>
-          CartNotifier(products: remoteDataSource.getMenuProductsList()),
-      child: MaterialApp(
-        routes: {
-          Urls.loginPage: (context) => const Login(),
-          Urls.qrcodePage: (context) => const LoginQR(),
-          Urls.menuPage: (context) => const Menu(),
-          Urls.productDetailsPage: (context) => ProductDetails(),
-          Urls.cartPage: (context) => Cart(),
-        },
-        initialRoute: Urls.menuPage,
-        title: Texts.appName,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: const Color(0xFFFF8A65),
-            secondary: const Color(0xFFFFC107),
-          ),
+    final products = remoteDataSource.getMenuProductsList();
+    CartNotifier cartNotifier = CartNotifier(products: products);
+    final router = GoRouter(initialLocation: Urls.qrcodePage, routes: [
+      GoRoute(
+          name: RouteNames.loginPage,
+          path: Urls.loginPage,
+          builder: (context, state) => const Login()),
+      GoRoute(
+          name: RouteNames.qrcodePage,
+          path: Urls.qrcodePage,
+          builder: (context, state) => const LoginQR()),
+      GoRoute(
+          name: RouteNames.tableOptions,
+          path: Urls.tableOptions,
+          builder: (context, state) => const TableOptions()),
+      GoRoute(
+          name: RouteNames.productDetailsPage,
+          path: Urls.productDetailsPage,
+          builder: (context, state) => ProductDetails(
+                product: state.extra,
+              )),
+      GoRoute(
+          name: RouteNames.cartPage,
+          path: Urls.cartPage,
+          builder: (context, state) => Cart(
+                productsList: state.extra,
+              )),
+      GoRoute(
+        name: RouteNames.menuPage,
+        path: Urls.menuPage,
+        builder: (context, state) => ChangeNotifierProvider.value(
+          value: cartNotifier,
+          child: const Menu(),
         ),
       ),
-      home: TableOptions(),
+    ]);
+    return MaterialApp.router(
+      routerConfig: router,
+      title: Texts.appName,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xFFFF8A65),
+          secondary: const Color(0xFFFFC107),
+        ),
+      ),
     );
   }
 }

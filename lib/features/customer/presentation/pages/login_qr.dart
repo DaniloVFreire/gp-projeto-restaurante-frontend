@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sobre_mesa/core/constants/urls.dart';
 
@@ -40,75 +41,74 @@ class _LoginQRState extends State<LoginQR> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(top: 150),
+      body: Column(
+        children: <Widget>[
+          const Padding(
+            padding: EdgeInsets.only(top: 150),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Text(
+              'Bem vindo ao Sobre Mesa',
+              style: TextStyle(color: Colors.black, fontSize: 25),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                'Bem vindo ao Sobre Mesa',
-                style: TextStyle(color: Colors.black, fontSize: 25),
-              ),
-            ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0),
-              child: Center(
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2.0),
-                  ),
-                  child: QRView(
-                    key: _qrKey,
-                    onQRViewCreated: _onQRViewCreated,
-                    overlay: QrScannerOverlayShape(
-                      borderColor: Colors.red,
-                      borderRadius: 10,
-                      borderLength: 30,
-                      borderWidth: 10,
-                      cutOutSize: 300,
-                    ),
+          ),
+          const Padding(
+            padding:
+                EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Center(
+              child: Container(
+                width: 250,
+                height: 250,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 2.0),
+                ),
+                child: QRView(
+                  key: _qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                  overlay: QrScannerOverlayShape(
+                    borderColor: Colors.red,
+                    borderRadius: 10,
+                    borderLength: 30,
+                    borderWidth: 10,
+                    cutOutSize: 300,
                   ),
                 ),
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+          ),
+          const Padding(
+            padding:
+                EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+          ),
+          const Spacer(
+            flex: 3,
+          ),
+          InkWell(
+            onTap: () {
+              context.go(Urls.menuPage);
+            },
+            child: const Text(
+              'Acessar mesa',
+              style: TextStyle(fontSize: 16),
             ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                color: Colors.deepOrange,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Urls.menuPage);
-                },
-                child: const Text(
-                  'Usar Mesa',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              context.go(Urls.loginPage);
+            },
+            child: const Text(
+              'Acesso administrativo',
+              style: TextStyle(fontSize: 16),
             ),
-            const SizedBox(
-              height: 130,
-            ),
-          ],
-        ),
+          ),
+          const Spacer(
+            flex: 1,
+          ),
+        ],
       ),
     );
   }
