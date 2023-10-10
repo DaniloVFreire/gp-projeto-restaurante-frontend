@@ -34,20 +34,27 @@ class MenuRemoteDataSource {
               'Deliciosas panquecas, com brigadeiro e fatias de morango.',
           price: 16.50,
           pictureId: 0,
-          id: 'Panqueca de chocolate'));
+          id: '3'));
       productsList.add(Product(
           name: 'Latte',
           description:
               'Café de alta qualidade, com distintas camadas de leite e espuma.',
           price: 12.99,
           pictureId: 1,
-          id: 'Latte'));
+          id: '4'));
       productsList.add(Product(
           name: 'Executivo com frango',
           description: 'Frango, arroz e batata.',
           price: 17.00,
           pictureId: 2,
-          id: 'Executivo com frango'));
+          id: '5'));
+
+      productsList.add(Product(
+          name: 'Agua mineral 500ml',
+          description: 'Agua geladinha.',
+          price: 4.80,
+          pictureId: 3,
+          id: '6'));
       return productsList;
     } catch (e) {
       throw ApiRequestTimeoutException(errorMessage: 'socorro');

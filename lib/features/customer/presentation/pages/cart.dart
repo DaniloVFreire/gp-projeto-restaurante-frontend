@@ -28,7 +28,7 @@ class _CartState extends State<Cart> {
   @override
   void initState() {
     imageManager.populateImagesManually();
-    products = dataSource.getMenuProductsListFromApi() as List<Product>;
+    //products = dataSource.getMenuProductsListFromApi() as List<Product>;
     //Get user from cache
     super.initState();
   }
