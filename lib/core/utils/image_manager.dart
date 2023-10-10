@@ -14,6 +14,7 @@ class ImageManager {
       height: 70,
       width: 70,
     ));
+
     images.add(Image.asset(
       './assets/2latte.png',
       scale: 2.0,
@@ -29,6 +30,41 @@ class ImageManager {
       height: 70,
       width: 70,
     ));
-    //Image image2 = Image.file(File(imagePath);
+    images.add(Image.asset(
+      './assets/4agua.webp',
+      scale: 0.1,
+      fit: BoxFit.fitHeight,
+      height: 70,
+      width: 70,
+    ));
+
+    // images.add(Image.asset(
+    //   './assets/bolo_de_macaxeira.jpg',
+    //   scale: 0.1,
+    //   fit: BoxFit.cover,
+    //   height: 70,
+    //   width: 70,
+    // ));
+    // images.add(Image.asset(
+    //   './assets/bolo_de_milho_p.jpg',
+    //   scale: 0.1,
+    //   fit: BoxFit.fitHeight,
+    //   height: 70,
+    //   width: 70,
+    // ));
+    // images.add(Image.asset(
+    //   './assets/canjica200.jpg',
+    //   scale: 0.1,
+    //   fit: BoxFit.fitHeight,
+    //   height: 70,
+    //   width: 70,
+    // ));
+    // images.add(Image.asset(
+    //   './assets/canjica500.jpg',
+    //   scale: 0.1,
+    //   fit: BoxFit.fitHeight,
+    //   height: 70,
+    //   width: 70,
+    // ));
   }
 }

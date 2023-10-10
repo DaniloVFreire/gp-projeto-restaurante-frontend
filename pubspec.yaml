@@ -69,7 +69,12 @@ flutter:
     - ./assets/3executivo_de_frango.png
     - ./assets/cafe_home.webp
     - ./assets/login.jpg
-    - ./assets/login.jpg
+    - ./assets/4agua.webp
+    - ./assets/bolo_de_macaxeira.jpg
+    - ./assets/5bolo_de_macaxeira.jpg
+    - ./assets/bolo_de_milho_p.jpg
+    - ./assets/canjica200.jpg
+    - ./assets/canjica500.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

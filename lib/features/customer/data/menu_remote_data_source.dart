@@ -35,6 +35,7 @@ class MenuRemoteDataSource {
           price: 16.50,
           pictureId: 0,
           id: '3'));
+
       productsList.add(Product(
           name: 'Latte',
           description:
@@ -48,13 +49,37 @@ class MenuRemoteDataSource {
           price: 17.00,
           pictureId: 2,
           id: '5'));
-
       productsList.add(Product(
           name: 'Agua mineral 500ml',
           description: 'Agua geladinha.',
           price: 4.80,
           pictureId: 3,
           id: '6'));
+
+      productsList.add(Product(
+          name: 'Bolo de macaxeira (P)',
+          description: 'Bolo delicioso de macaxeira.',
+          price: 12.00,
+          pictureId: 4,
+          id: '2'));
+      // productsList.add(Product(
+      //     name: 'Bolo de milho (P)',
+      //     description: 'Bolo delicioso de milho.',
+      //     price: 12.00,
+      //     pictureId: 5,
+      //     id: '6'));
+      // productsList.add(Product(
+      //     name: 'Canjica (250ml)',
+      //     description: 'Deliciosa porção de canjica.',
+      //     price: 7.00,
+      //     pictureId: 7,
+      //     id: '9'));
+      // productsList.add(Product(
+      //     name: 'Munguzá (400ml)',
+      //     description: 'Delicioso copo de munguzá.',
+      //     price: 5.00,
+      //     pictureId: 9,
+      //     id: '10'));
       return productsList;
     } catch (e) {
       throw ApiRequestTimeoutException(errorMessage: 'socorro');
