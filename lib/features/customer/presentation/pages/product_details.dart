@@ -72,15 +72,31 @@ class _ProductDetailsState extends State<ProductDetails> {
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              context.go(Urls.menuPage);
-            },
-            child: const Text(
-              'Usar Mesa',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+          Spacer(
+            flex: 10,
+          ),
+          Center(
+            child: Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                color: Colors.deepOrange,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  context.go(Urls.menuPage);
+                },
+                child: const Center(
+                  child: Text(
+                    'Voltar',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                ),
+              ),
             ),
           ),
+          Spacer()
         ],
       ),
     );
