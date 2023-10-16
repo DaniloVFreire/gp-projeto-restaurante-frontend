@@ -56,12 +56,12 @@ class MenuRemoteDataSource {
           pictureId: 3,
           id: '6'));
 
-      productsList.add(Product(
-          name: 'Bolo de macaxeira (P)',
-          description: 'Bolo delicioso de macaxeira.',
-          price: 12.00,
-          pictureId: 4,
-          id: '2'));
+      // productsList.add(Product(
+      //     name: 'Bolo de macaxeira (P)',
+      //     description: 'Bolo delicioso de macaxeira.',
+      //     price: 12.00,
+      //     pictureId: 4,
+      //     id: '2'));
       // productsList.add(Product(
       //     name: 'Bolo de milho (P)',
       //     description: 'Bolo delicioso de milho.',
